@@ -14,14 +14,35 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
-function readWords(){
+var userInputField = document.getElementById('userInputField'); //contém a entrada do usuario
+var userInputSubmit = document.getElementById('userInputSubmit'); //botao da Pesquisar extensão
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  userInputSubmit.addEventListener('click', function (){
+    searchGoogle(userInputField.value);
+    
+    /*var node = document.createElement('input');
+    node.type = "checkbox";
+    node.innerHTML = "PAPAPAP";
+    document.getElementById('chckBoxForm').appendChild(node);*/
+  });
+});
+
+function searchGoogle(string){
+    window.open('http://google.com/search?q=' + string);
+}
+
+function readWords(){ //retorna uma Promise com todos os substativos já "splitados" em um array ---> readWords().then(arr => console.log("a palavra é: " + arr[i]));
   console.log("Fetch sendo carregado");
   return fetch('478palavras.txt').then(response => response.text().then(text => text.split(/\r?\n/)));
 }
 
-function getRandom() { //gera numero random entre 0 e 477
-  return Math.floor(Math.random() * 479);
+function randomNumbers(){ //retorna array com 10 numeros random entre 0 e 477
+  var arr = new Array();
+  for(let i = 0; i < 10; i++){
+    let rdm = Math.floor(Math.random() * 476);
+    arr.push(rdm);
+  }
+  return arr;
 }
-
-let i = getRandom();
-readWords().then(arr => console.log("a palavra é: " + arr[i]));

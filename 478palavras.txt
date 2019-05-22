@@ -1,4 +1,4 @@
-acabamento
+﻿acabamento
 acampamento
 aço
 acorde
@@ -474,4 +474,3 @@ vizinho
 vogal
 vontade
 voz
-
