@@ -18,4 +18,10 @@ function readWords(){
   console.log("Fetch sendo carregado");
   return fetch('478palavras.txt').then(response => response.text().then(text => text.split(/\r?\n/)));
 }
-readWords().then(arr => console.log(arr));
+
+function getRandom() { //gera numero random entre 0 e 477
+  return Math.floor(Math.random() * 479);
+}
+
+let i = getRandom();
+readWords().then(arr => console.log("a palavra é: " + arr[i]));
