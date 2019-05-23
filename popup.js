@@ -5,7 +5,9 @@ var checkedWords = new Array(); //Conterá a lista de palavras marcadas pelo usu
 
 document.addEventListener("DOMContentLoaded", function () { //DOMContentLoaded é equivalente ao window.onload. Aguarda todos os elementos do DOM serem carregados antes de executar
    userInputSubmit.addEventListener('click', function (){
-    searchGoogle(userInputField.value);
+    if(userInputField.value != ""){ //só faz a pesquisa do texto entrado pelo usuario se ele escreveu algo no campo
+        searchGoogle(userInputField.value);
+    }
     //fazendo a pesquisa com os checkboxes selecionados pelo user
     checkboxes = document.getElementsByClassName('chckBox'); //selecionando todos os elementos que foram marcados
     for(let i = 0; i < checkboxes.length; i++){ //verificando quais foram "tickados" e guardando-os em checkedWords
