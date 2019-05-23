@@ -1,21 +1,35 @@
 
-chrome.runtime.onStartup.addListener(function() {
+/*chrome.runtime.onStartup.addListener(function() {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
+        pageUrl: {hostEquals: 'developer.chrome.com'},
       })
       ],
           actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);
   });
-});
+});*/
 
 var userInputField = document.getElementById('userInputField'); //contém a entrada do usuario
 var userInputSubmit = document.getElementById('userInputSubmit'); //botao da Pesquisar extensão
+var checkedWords = new Array(); //Conterá a lista de palavras marcadas pelo usuario
 
 document.addEventListener("DOMContentLoaded", function () {
    userInputSubmit.addEventListener('click', function (){
     searchGoogle(userInputField.value);
+
+    //fazendo a pesquisa com os checkboxes
+    var checkboxes = document.getElementsByClassName('chckBox'); //selecionando todos os elementos que foram marcados
+    for(let i = 0; i < checkboxes.length; i++){
+      if(checkboxes[i].checked){
+        checkedWords.push(checkboxes[i].value);
+      }
+    }
+
+    checkedWords.forEach(e =>{
+      searchGoogle(userInputField.value + e);
+    });
   });
 });
 
@@ -38,9 +52,10 @@ function randomNumbers(){ //retorna array com 10 numeros random entre 0 e 477
 }
 
 // mostrando as 10 palavras
-window.onload = function (){
+window.onload = function init(){
       var numbers = randomNumbers(); //array com numeros sortidos
       var wordsPromise = readWords();
+      var myform = document.getElementById('myform');
 
       numbers.forEach(function (number){ //para cada numero do array, criar os checkboxes com as respectivas labels
         wordsPromise.then(function (arr){
@@ -50,13 +65,14 @@ window.onload = function (){
           myInput.value = arr[number]; //é a palavra sorteada
           myInput.className = "chckBox";
           myInput.type = "checkbox";
-          document.querySelector('body').appendChild(myInput);
+          myform.appendChild(myInput);
 
           //colocando label para cada checkbox
           let lbl = document.createElement('label');
           lbl.textContent = arr[number];
           lbl.htmlFor = arr[number];
-          document.querySelector('body').appendChild(lbl);
+          myform.appendChild(lbl);
         });
       });
-    }
+
+}
