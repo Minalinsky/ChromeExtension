@@ -1,12 +1,9 @@
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log("The color is green.");
-  });
+chrome.runtime.onStartup.addListener(function() {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostEquals: 'developer.chrome.com'},
+        //pageUrl: {hostEquals: 'developer.chrome.com'},
       })
       ],
           actions: [new chrome.declarativeContent.ShowPageAction()]
@@ -17,15 +14,9 @@ chrome.runtime.onInstalled.addListener(function() {
 var userInputField = document.getElementById('userInputField'); //contém a entrada do usuario
 var userInputSubmit = document.getElementById('userInputSubmit'); //botao da Pesquisar extensão
 
-
 document.addEventListener("DOMContentLoaded", function () {
-  userInputSubmit.addEventListener('click', function (){
+   userInputSubmit.addEventListener('click', function (){
     searchGoogle(userInputField.value);
-    
-    /*var node = document.createElement('input');
-    node.type = "checkbox";
-    node.innerHTML = "PAPAPAP";
-    document.getElementById('chckBoxForm').appendChild(node);*/
   });
 });
 
@@ -46,3 +37,16 @@ function randomNumbers(){ //retorna array com 10 numeros random entre 0 e 477
   }
   return arr;
 }
+
+// mostrando as 10 palavras
+
+window.onload = function (){
+      for(let i = 0; i < 10; i++){
+        let myInput = document.createElement('input');
+        myInput.className = "chckBox";
+        myInput.type = "checkbox";
+        myInput.value = "Example Value";
+        console.log("o Value é: " + myInput.value);
+        document.querySelector('body').appendChild(myInput);
+        }
+    }
