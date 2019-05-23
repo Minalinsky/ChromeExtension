@@ -3,7 +3,6 @@ chrome.runtime.onStartup.addListener(function() {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({
-        //pageUrl: {hostEquals: 'developer.chrome.com'},
       })
       ],
           actions: [new chrome.declarativeContent.ShowPageAction()]
@@ -40,17 +39,24 @@ function randomNumbers(){ //retorna array com 10 numeros random entre 0 e 477
 
 // mostrando as 10 palavras
 window.onload = function (){
-      for(let i = 0; i < 10; i++){
-        //criando os checkboxes
-        let myInput = document.createElement('input');
-        myInput.id = "myID";
-        myInput.className = "chckBox";
-        myInput.type = "checkbox";
-        document.querySelector('body').appendChild(myInput);
-        //colocando label para cada checkbox
-        let lbl = document.createElement('label');
-        lbl.textContent = "minha Label";
-        lbl.htmlFor = "myID";
-        document.querySelector('body').appendChild(lbl);
-        }
+      var numbers = randomNumbers(); //array com numeros sortidos
+      var wordsPromise = readWords();
+
+      numbers.forEach(function (number){ //para cada numero do array, criar os checkboxes com as respectivas labels
+        wordsPromise.then(function (arr){
+          //criando os checkboxes
+          let myInput = document.createElement('input');
+          myInput.id = arr[number]; //é a palavra sorteada
+          myInput.value = arr[number]; //é a palavra sorteada
+          myInput.className = "chckBox";
+          myInput.type = "checkbox";
+          document.querySelector('body').appendChild(myInput);
+
+          //colocando label para cada checkbox
+          let lbl = document.createElement('label');
+          lbl.textContent = arr[number];
+          lbl.htmlFor = arr[number];
+          document.querySelector('body').appendChild(lbl);
+        });
+      });
     }
